@@ -54,8 +54,7 @@ app.use(route.get('/', function *(next) {
     }
 
     ctx.render('index', {
-        title: 'jsapi demo',
-        corpId: corpId,
+        title: 'Here we go...',
         config: JSON.stringify(yield g())
     }, true);
 }));

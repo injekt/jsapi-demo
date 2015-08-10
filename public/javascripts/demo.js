@@ -2,9 +2,6 @@
  * Created by liqiao on 8/10/15.
  */
 
-/**
- * here comes your client code~
- */
 window.addEventListener('load', function() {
     var config = JSON.parse(document.querySelector('#config').innerHTML);
 
@@ -28,19 +25,19 @@ window.addEventListener('load', function() {
             message: 'dd.device.notification.alert',
             title: 'This is title',
             buttonName: 'button',
-            onSuccess: win,
+            onSuccess: function(data) {
+                alert('win: ' + JSON.stringify(data));
+                var head = document.querySelector('h1');
+                head.innerHTML = head.innerHTML + ' It rocks!';
+            },
             onFail: fail
         });
     });
 
     dd.error(function(err) {
-        alert(JSON.stringify(err));
+        alert('dd error: ' + JSON.stringify(err));
     });
 });
-
-function win(data) {
-    alert('win: ' + JSON.stringify(data));
-}
 
 function fail(data) {
     alert('fail: ' + JSON.stringify(data));
