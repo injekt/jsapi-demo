@@ -32,12 +32,12 @@ app.use(route.get('/', function *(next) {
     var ctx = this;
     var nonceStr = 'abcdefg';
     var timeStamp = new Date().getTime();
-    var signedUrl = 'http://10.62.5.240:3001/';
+    var signedUrl = 'http://' + this.req.headers.host + this.req.url;
 
     function g() {
         return co(function *() {
-            var accessToken = yield invoke('/gettoken', {corpid: corpId, corpsecret: secret}, 'access_token');
-            var ticket = yield invoke('/get_jsapi_ticket', {ype: 'jsapi', access_token: accessToken}, 'ticket');
+            var accessToken = (yield invoke('/gettoken', {corpid: corpId, corpsecret: secret}))['access_token'];
+            var ticket = (yield invoke('/get_jsapi_ticket', {ype: 'jsapi', access_token: accessToken}))['ticket'];
             var signature = sign({
                 nonceStr: nonceStr,
                 timeStamp: timeStamp,
@@ -50,19 +50,21 @@ app.use(route.get('/', function *(next) {
                 timeStamp: timeStamp,
                 corpId: corpId
             };
+        }).catch(function(err) {
+            console.log(err);
         });
     }
 
     ctx.render('index', {
         title: 'Here we go...',
-        config: JSON.stringify(yield g())
+        config: JSON.stringify(yield g()),
     }, true);
 }));
 
 app.listen(3001);
 
 
-function invoke(path, params, field) {
+function invoke(path, params) {
     return function(cb) {
         https.get(OAPI_HOST + path + '?' + querystring.stringify(params), function(res) {
             if (res.statusCode === 200) {
@@ -72,7 +74,7 @@ function invoke(path, params, field) {
                 }).on('end', function () {
                     var result = JSON.parse(body);
                     if (result && 0 === result.errcode) {
-                        cb(null, result[field]);
+                        cb(null, result);
                     }
                     else {
                         cb(result);

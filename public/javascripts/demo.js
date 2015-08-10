@@ -20,6 +20,9 @@ window.addEventListener('load', function() {
 
     dd.ready(function() {
         alert('dd ready');
+        
+        var head = document.querySelector('h1');
+        head.innerHTML = head.innerHTML + ' It rocks!';
 
         dd.device.notification.alert({
             message: 'dd.device.notification.alert',
@@ -27,8 +30,6 @@ window.addEventListener('load', function() {
             buttonName: 'button',
             onSuccess: function(data) {
                 alert('win: ' + JSON.stringify(data));
-                var head = document.querySelector('h1');
-                head.innerHTML = head.innerHTML + ' It rocks!';
             },
             onFail: fail
         });
