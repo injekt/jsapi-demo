@@ -29,7 +29,6 @@ app.use(jade.middleware({
 }));
 
 app.use(route.get('/', function *(next) {
-    var ctx = this;
     var nonceStr = 'abcdefg';
     var timeStamp = new Date().getTime();
     var signedUrl = 'http://' + this.req.headers.host + this.req.url;
@@ -55,7 +54,7 @@ app.use(route.get('/', function *(next) {
         });
     }
 
-    ctx.render('index', {
+    this.render('index', {
         title: 'Here we go...',
         config: JSON.stringify(yield g()),
     }, true);
