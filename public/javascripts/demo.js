@@ -21,6 +21,14 @@ dd.config({
 dd.ready(function() {
     alert('dd ready');
 
+    document.addEventListener('pause', function() {
+        alert('pause');
+    });
+
+    document.addEventListener('resume', function() {
+        alert('resume');
+    });
+
     var head = document.querySelector('h1');
     head.innerHTML = head.innerHTML + ' It rocks!';
 
@@ -31,14 +39,12 @@ dd.ready(function() {
         onSuccess: function(data) {
             alert('win: ' + JSON.stringify(data));
         },
-        onFail: fail
+        onFail: function(err) {
+            alert('fail: ' + JSON.stringify(err));
+        }
     });
 });
 
 dd.error(function(err) {
     alert('dd error: ' + JSON.stringify(err));
 });
-
-function fail(data) {
-    alert('fail: ' + JSON.stringify(data));
-}

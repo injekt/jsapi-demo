@@ -31,7 +31,7 @@ app.use(jade.middleware({
 app.use(route.get('/', function *(next) {
     var nonceStr = 'abcdefg';
     var timeStamp = new Date().getTime();
-    var signedUrl = 'http://' + this.req.headers.host + this.req.url;
+    var signedUrl = decodeURIComponent(this.href);
 
     function g() {
         return co(function *() {
