@@ -1,4 +1,4 @@
-# jsapi demo
+# simple jsapi demo
 
 ## Awesome project
 
