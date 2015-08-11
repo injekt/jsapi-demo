@@ -3,14 +3,15 @@
  */
 
 window.addEventListener('load', function() {
-    var config = JSON.parse(document.querySelector('#config').innerHTML);
-
+    /**
+     * _config comes from server-side template. see views/index.jade
+     */
     dd.config({
         appId: '',
-        corpId: config.corpId,
-        timeStamp: config.timeStamp,
-        nonceStr: config.nonceStr,
-        signature: config.signature,
+        corpId: _config.corpId,
+        timeStamp: _config.timeStamp,
+        nonceStr: _config.nonceStr,
+        signature: _config.signature,
         jsApiList: ['device.notification.confirm',
             'device.notification.alert',
             'device.notification.prompt',
