@@ -36,7 +36,7 @@ app.use(route.get('/', function *(next) {
     function g() {
         return co(function *() {
             var accessToken = (yield invoke('/gettoken', {corpid: corpId, corpsecret: secret}))['access_token'];
-            var ticket = (yield invoke('/get_jsapi_ticket', {ype: 'jsapi', access_token: accessToken}))['ticket'];
+            var ticket = (yield invoke('/get_jsapi_ticket', {type: 'jsapi', access_token: accessToken}))['ticket'];
             var signature = sign({
                 nonceStr: nonceStr,
                 timeStamp: timeStamp,
